@@ -1,16 +1,11 @@
-/*
- *  This sketch demonstrates how to set up a simple HTTP-like server.
- *  The server will set a GPIO pin depending on the request
- *    http://server_ip/gpio/0 will set the GPIO2 low,
- *    http://server_ip/gpio/1 will set the GPIO2 high
- *  server_ip is the IP address of the ESP8266 module, will be 
- *  printed to Serial when the module is connected.
- */
-
+#include <DNSServer.h>
+#include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
+#include <WiFiManager.h>
 
-const char* ssid = "SSID";
-const char* password = "PASSWORD";
+WiFiManager wifiManager;
+const char* SSID = "WifiSanta";
+// const char* password = "PASSWORD";
 
 byte mac[6]; // the MAC address of your Wifi shield
 
@@ -25,23 +20,8 @@ void setup() {
   // prepare GPIO12
   pinMode(12, OUTPUT);
   digitalWrite(12, 0);
-  
-  // Connect to WiFi network
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi connected");
 
+  // print MAC address
   WiFi.macAddress(mac);
   Serial.print("MAC: ");
   Serial.print(mac[5],HEX);
@@ -55,6 +35,11 @@ void setup() {
   Serial.print(mac[1],HEX);
   Serial.print(":");
   Serial.println(mac[0],HEX);
+  
+  // Connect to WiFi network - change settings via AP 'SantaNet'
+  wifiManager.autoConnect(SSID);
+  Serial.println("WiFi connected");
+
   
   // Start the server
   server.begin();
