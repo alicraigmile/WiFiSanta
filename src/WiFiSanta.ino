@@ -12,6 +12,8 @@
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
 
+byte mac[6]; // the MAC address of your Wifi shield
+
 // Create an instance of the server
 // specify the port to listen on as an argument
 WiFiServer server(80);
@@ -39,6 +41,20 @@ void setup() {
   }
   Serial.println("");
   Serial.println("WiFi connected");
+
+  WiFi.macAddress(mac);
+  Serial.print("MAC: ");
+  Serial.print(mac[5],HEX);
+  Serial.print(":");
+  Serial.print(mac[4],HEX);
+  Serial.print(":");
+  Serial.print(mac[3],HEX);
+  Serial.print(":");
+  Serial.print(mac[2],HEX);
+  Serial.print(":");
+  Serial.print(mac[1],HEX);
+  Serial.print(":");
+  Serial.println(mac[0],HEX);
   
   // Start the server
   server.begin();
