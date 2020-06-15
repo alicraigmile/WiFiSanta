@@ -4,23 +4,40 @@ Santa for the internet age
 
 ## Hardware
 
-- "Dancing Santa" ornament/toy (modified)
+- "Dancing Santa" ornament/toy
 - ESP-03 (ESP8266 development board)
-- Push switch (push on boot to program via the ftdi)
-- 5 pin connector (ftdi for serial monitoring and programming)
-- pin connector (to connect to modified "Dancing Santa" toy)
-- pin connector (power in)
-- Toggle switch (power on/off)
-- 10k pulldown resistor
-- 1k current limiting resistor
+- Momentary switch
+- 5 pin header (0.1" pitch)
+- Toggle switch
+- Resistors: 2 x 10k, 1 x 1k
+
+### Block diagram
+
+![](https://github.com/alicraigmile/WiFiSanta/blob/master/wifisanta%20block%20diagram.svg "Block diagram of the required hardware")
 
 ### Connections
+
+1. CH_PD connected to Vcc
+2. 5 pin headers is connected to ESP-03 (see: https://tewarid.github.io/2016/05/13/getting-started-with-the-esp-03.html)
+3. Momentary switch connected between GPIO0 and GND (with a 10k pull-up resistor). 
+4. GPIO12 connected to base of transistor via 1k current limiting resistor.
+5. Emitter of transistor connected to ground via 10k pulldown resistor.
+5. On the dancing santa, locate the toggle on/off switch and connect one side of this to the transistor's collector, and the other to it's emitter.
+5. Batteries connected to ESP-O3 Vcc via toggle switch, and GND.
 
 ## Software
 
 Download the following code and upload it to the ESP-03:
 
 https://github.com/alicraigmile/WiFiSanta/tree/master/src/WiFiSanta
+
+### Flashing the ESP-03
+
+Connect your FTDI connector to the 5 pin connector.
+
+From Arduino IDE, select the correct board and serial port settings, then upload your code.
+
+NB: Hold down the momentary switch as you connect the power in order to put the ESP-03 intro flashing mode.
 
 ### Dependancies
 
